@@ -1,0 +1,84 @@
+/* Height of body page */
+body, html {
+    height: 100%;
+    margin-left: 1em;
+    margin-right: 1em;
+    font-family: Arial;
+  }
+  
+  /* Style of tab links */
+  .tablink {
+    background-color: #555;
+    color: white;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    margin-bottom:1em;
+    font-size: 17px;
+    width: 33.3%;
+  }
+  
+  .tablink:hover {
+    background-color: #777;
+  }
+  
+  /* Style the tab content (and add height:100% for full page) */
+  .tabcontent {
+    color: white;
+    display: none;
+    padding: 100px 20px;
+    height: 100%;
+  }
+
+
+/* Style for tabs */
+#publish {
+    background-color: #2D4356;
+    opacity: 0.75;
+}
+
+#draft {
+    background-color: #435B66;
+}
+
+#trash {
+    background-color: #A76F6F;
+    opacity: 0.9;
+}
+
+/* Style for posts */
+.post-title {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.5vw;
+    font-weight:500;
+}
+
+.post-category {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1vw;
+    font-style: italic;
+}
+
+.post-holder {
+    width: 100%;
+    border: 0.5px solid;
+    border-radius: 10px;
+
+    padding-left: 0.5em;
+    margin-bottom: 1em;
+}
+
+.post-info {
+    width: 90%;
+}
+
+.post-action {
+    width: 2.5%;
+    margin-top: 0.25em
+}
+
+.action-button {
+    padding-top: 0.5rem;
+}

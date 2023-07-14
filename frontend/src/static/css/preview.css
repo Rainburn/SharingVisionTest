@@ -1,0 +1,51 @@
+.pagination-holder {
+width: 100%;
+display: flex;
+justify-content: center;
+}
+
+.pagination {
+display: inline-block;
+}
+
+.pagination a {
+color: black;
+float: left;
+padding: 8px 16px;
+text-decoration: none;
+}
+
+.pagination a.active {
+background-color: #EAB2A0;
+color: white;
+border-radius: 5px;
+}
+
+.pagination a:hover:not(.active) {
+background-color: #ddd;
+border-radius: 5px;
+}
+
+hr {
+border-top: 2px solid #bbb;
+border-radius: 5px;
+}
+
+/* Style for posts */
+.post-title {
+font-family: 'Times New Roman', Times, serif;
+font-size: 1.75vw;
+font-weight:500;
+}
+
+.post-content {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.1vw;
+}
+
+.post-category {
+    padding-top: 0.5em;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1vw;
+    font-style: italic;
+}

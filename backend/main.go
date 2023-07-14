@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 	"github.com/go-playground/validator/v10"
 	"net/http"
 	"database/sql"
@@ -33,6 +34,12 @@ func main() {
 
 	// Create router
 	r := echo.New()
+
+	r.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"*"},
+		AllowMethods: []string{"GET", "PUT", "DELETE", "PATCH"},
+		AllowHeaders: []string{"*"},
+	  }))
 
 	// Create new article. (1)
 	r.POST("/article/", func(ctx echo.Context) error {
@@ -154,13 +161,84 @@ func main() {
 		return ctx.JSON(http.StatusOK, message)
 	})
 
-	// Show ALL posts
-	r.GET("/article", func(ctx echo.Context) error {
-		data := fmt.Sprintf("ID retrieved: %s", ctx.Param("id"))
-		return ctx.String(http.StatusOK, data)
+	// Get all posts without limit and offset
+	r.GET("/article/", func(ctx echo.Context) error {
+		var posts []Post
+
+		result, err := db.Query("SELECT Id, Title, Content, Category, Status FROM posts")
+		if err != nil {
+			log.Print(err)
+		}
+
+		for result.Next() {
+			var post Post
+			err := result.Scan(&post.Id, &post.Title, &post.Content, &post.Category, &post.Status)
+			if err != nil {
+				log.Print(err)
+				continue
+			}
+			posts = append(posts, post)
+		}
+
+		return ctx.JSON(http.StatusOK, posts)
 	})
 
-	
+	// Endpoint to move post to trash
+	r.PATCH("/article/:id", func(ctx echo.Context) error {
+		id := ctx.Param("id")
 
+		status := ctx.FormValue("Status")
+
+		_, err = db.Exec("UPDATE posts SET Status = ? where id = ? ", status, id)
+		if err != nil {
+			log.Print(err)
+		}
+		return ctx.JSON(http.StatusOK, map[string]string{})
+	})
+
+	// Get total number of published posts
+	r.GET("/article/count", func(ctx echo.Context) error {
+		var countStr string
+
+		err := db.QueryRow("SELECT count(*) from posts where Status like 'Publish'").Scan(&countStr)
+		if err != nil {
+			if err != sql.ErrNoRows {
+				log.Print(err)
+			}
+			
+		}
+
+		data := map[string]interface{} {
+			"count": countStr,
+		}
+		return ctx.JSON(http.StatusOK, data)	
+	})
+
+	// Show PUBLISHED article from DB with pagination on desired limit and offset. (2)
+	r.GET("/article/publish/:limit/:offset", func(ctx echo.Context) error {
+		limit := ctx.Param("limit")
+		offset := ctx.Param("offset")
+
+		var posts []Post
+
+		result, err := db.Query("SELECT Id, Title, Content, Category, Status FROM posts WHERE Status LIKE 'Publish' LIMIT ? OFFSET ?", limit, offset)
+		if err != nil {
+			log.Print(err)
+		}
+
+		for result.Next() {
+			var post Post
+			err := result.Scan(&post.Id, &post.Title, &post.Content, &post.Category, &post.Status)
+			if err != nil {
+				log.Print(err)
+				continue
+			}
+			posts = append(posts, post)
+		}
+
+		return ctx.JSON(http.StatusOK, posts)
+	})
+	
+	// Start the server
 	r.Start(":9000")
 }

@@ -1,70 +1,59 @@
-# Getting Started with Create React App
+# Sharing Vision Test
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Frontend
+### Stacks : HTML, CSS, Javascript (ReactJS)
 
-## Available Scripts
+How to use:
+1. Open directory `frontend/`
+2. Run `npm start`
+3. Frontend will running on localhost:3000
 
-In the project directory, you can run:
+Pages:
+1. "/" for dashboard/all posts
+2. "/write" to add post
+3. "/edit/:id" to edit specific post by id
+4. "/preview/:pagenumber" to view all published posts
 
-### `npm start`
+For example:
+1. localhost:3000/
+2. localhost:3000/write
+3. localhost:3000/edit/2
+4. localhost:3000/preview/1
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Backend
+### Stacks : Golang, MySQL (Database)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+How to use:
+1. Open directory `backend`
+2. This service utilizes env variables for the MySQL credential. 
+Please provide MySQL username, password, and DB name by doing these on Terminal:
+```
+export MYSQL_USERNAME={your_mysql_username}
+export MYSQL_PASSWORD={your_mysql_password}
+export DB_NAME={your_database_name} 
+```
+3. Run `go run main.go`
+4. Server will running on localhost:9000
 
-### `npm test`
+Endpoints were made more than as requested to provide frontend requests. All endpoints are:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. /article/
+>For /article endpoint, there are two methods, GET AND POST.
+>GET method is to fetch all posts. Meanwhile POST is to insert new post.
+2. /article/:id
+>There are four acceptable methods, GET, PUT, PATCH, and DELETE. GET method endpoint is used to fetch a post based on post ID.
+>PUT method is used to edit specific post by post ID.
+>PATCH method is used to edit specific post, mainly used by "Trash" feature in frontend.
+>Meanwhile, DELETE method is for post deletion by ID.
+3. /article/:limit/:offset
+>For /article/:limit/:offset, only GET method is provided. This endpoint is used to fetch posts with limit and offset.
+4. /article/count
+>Only supports GET method. This endpoint is meant to get the number of published posts.
+5. /article/publish/:limit/:offset
+> Only GET method is supported. This is very similar with number #3 but only retrieves PUBLISHED posts.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+*Schema (DDL) and some dummy data for the database is included in "backend" folder*
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+*Export of Postman Collection is placed inside "backend/Postman/" folder*
