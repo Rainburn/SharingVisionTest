@@ -32,7 +32,7 @@ export MYSQL_USERNAME={your_mysql_username}
 export MYSQL_PASSWORD={your_mysql_password}
 export DB_NAME={your_database_name} 
 ```
-3. Run `go run main.go`
+3. Run `go run *.go`
 4. Server will running on localhost:9000
 
 Endpoints were made more than as requested to provide frontend requests. All endpoints are:
